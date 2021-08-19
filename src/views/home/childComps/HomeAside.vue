@@ -1,28 +1,15 @@
 <template>
   <div id="home-aside">
     <div class="toggle-button" @click="toggleCollapseClick">|||</div>
-    <el-menu
-      background-color="#333744"
-      text-color="#fff"
-      unique-opened
-      :collapse="isCollapse"
-      :collapse-transition="false"
-      router
-      :default-active="active"
-    >
+    <el-menu background-color="#333744" text-color="#fff" unique-opened :collapse="isCollapse" :collapse-transition="false" router :default-active="active">
+      <!-- 一级菜单 -->
       <el-submenu :index="item.id + ''" v-for="item in menuList" :key="item.id">
-        <!-- 一级菜单 -->
         <template slot="title">
           <i :class="iconsObj[item.id]"></i>
           <span>{{ item.authName }}</span>
         </template>
         <!-- 二级菜单 -->
-        <el-menu-item
-          :index="'/' + item1.path"
-          v-for="item1 in item.children"
-          :key="item1.id"
-          @click="activeStateClick('/' + item1.path)"
-        >
+        <el-menu-item :index="'/' + item1.path" v-for="item1 in item.children" :key="item1.id" @click="activeStateClick('/' + item1.path)">
           <template slot="title">
             <i class="el-icon-menu"></i>
             <span>{{ item1.authName }}</span>

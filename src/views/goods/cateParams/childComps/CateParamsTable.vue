@@ -6,12 +6,7 @@
       <el-table-column type="expand">
         <template v-slot="scope">
           <!-- tag标签 -->
-          <el-tag
-            v-for="(item, i) in scope.row.attr_vals"
-            :key="i"
-            closable
-            @close="removeHandle(scope.row, i)"
-          >
+          <el-tag v-for="(item, i) in scope.row.attr_vals" :key="i" closable @close="removeHandle(scope.row, i)">
             {{ item }}
           </el-tag>
           <!-- 动态编辑标签 -->
@@ -25,36 +20,15 @@
             @blur="handleInputConfirm(scope.row)"
           >
           </el-input>
-          <el-button
-            v-else
-            class="button-new-tag"
-            size="small"
-            @click="showInput(scope.row)"
-            >+ New Tag</el-button
-          >
+          <el-button v-else class="button-new-tag" size="small" @click="showInput(scope.row)">+ New Tag</el-button>
         </template>
       </el-table-column>
       <el-table-column type="index" label="#"></el-table-column>
-      <el-table-column
-        :label="text + '名称'"
-        prop="attr_name"
-      ></el-table-column>
+      <el-table-column :label="text + '名称'" prop="attr_name"></el-table-column>
       <el-table-column label="操作" prop="attr_name">
         <template v-slot="scope">
-          <el-button
-            type="primary"
-            icon="el-icon-edit"
-            size="mini"
-            @click="editParams(scope.row)"
-            >编辑</el-button
-          >
-          <el-button
-            type="danger"
-            icon="el-icon-delete"
-            size="mini"
-            @click="removeParams(scope.row.attr_id)"
-            >删除</el-button
-          >
+          <el-button type="primary" icon="el-icon-edit" size="mini" @click="editParams(scope.row)">编辑</el-button>
+          <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeParams(scope.row.attr_id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -94,12 +68,8 @@ export default {
         type: 'warning',
       })
         .then(async () => {
-          const { data } = await removeCateParams(
-            this.$store.state.cateId,
-            attrId
-          )
-          if (data.meta.status !== 200)
-            return this.$message.error(`删除${this.text}失败!`)
+          const { data } = await removeCateParams(this.$store.state.cateId, attrId)
+          if (data.meta.status !== 200) return this.$message.error(`删除${this.text}失败!`)
           this.$message.success(`删除${this.text}成功!`)
           // 请求刷新视图
           this.$emit('refreshList')
@@ -111,7 +81,6 @@ export default {
     // 监听动态编辑标签中的文本框 失去焦点触发的事件
     async handleInputConfirm(row) {
       row.inputVisible = false
-      console.log('ok')
       // 如果用户输入的是空格 就清空返回
       if (row.inputValue.trim().length === 0) {
         row.inputValue = ''
@@ -120,15 +89,8 @@ export default {
       // 如果是合法内容
       row.attr_vals.push(row.inputValue.trim())
       row.inputValue = ''
-      const { data } = await editCateParams(
-        this.$store.state.cateId,
-        row.attr_id,
-        row.attr_name,
-        row.attr_sel,
-        row.attr_vals.join(',')
-      )
-      if (data.meta.status !== 200)
-        return this.$message.error(`添加${this.text}项失败!`)
+      const { data } = await editCateParams(this.$store.state.cateId, row.attr_id, row.attr_name, row.attr_sel, row.attr_vals.join(','))
+      if (data.meta.status !== 200) return this.$message.error(`添加${this.text}项失败!`)
       this.$message.success(`添加${this.text}项成功!`)
     },
     // 监听动态编辑标签中的点击按钮 展示文本框
@@ -144,15 +106,8 @@ export default {
     // 监听tag标签上的删除小图标
     async removeHandle(row, i) {
       row.attr_vals.splice(i, 1)
-      const { data } = await editCateParams(
-        this.$store.state.cateId,
-        row.attr_id,
-        row.attr_name,
-        row.attr_sel,
-        row.attr_vals.join(',')
-      )
-      if (data.meta.status !== 200)
-        return this.$message.error(`删除${this.text}项失败!`)
+      const { data } = await editCateParams(this.$store.state.cateId, row.attr_id, row.attr_name, row.attr_sel, row.attr_vals.join(','))
+      if (data.meta.status !== 200) return this.$message.error(`删除${this.text}项失败!`)
       this.$message.success(`删除${this.text}项成功!`)
     },
   },

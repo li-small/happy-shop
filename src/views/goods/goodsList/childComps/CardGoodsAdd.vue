@@ -6,21 +6,9 @@
     <!-- 卡片视图区域 -->
     <el-card>
       <!-- 提示区域 -->
-      <el-alert
-        title="添加商品信息"
-        type="info"
-        center
-        show-icon
-        :closable="false"
-      >
-      </el-alert>
+      <el-alert title="添加商品信息" type="info" center show-icon :closable="false"> </el-alert>
       <!-- 步骤条 -->
-      <el-steps
-        :space="300"
-        :active="Number(currentIndex)"
-        finish-status="success"
-        align-center
-      >
+      <el-steps :space="300" :active="Number(currentIndex)" finish-status="success" align-center>
         <el-step title="基本信息"></el-step>
         <el-step title="商品参数"></el-step>
         <el-step title="商品属性"></el-step>
@@ -29,19 +17,9 @@
         <el-step title="完成"></el-step>
       </el-steps>
       <!-- 表单 -->
-      <el-form
-        :model="addForm"
-        :rules="addFormRules"
-        ref="addFormRef"
-        label-width="100px"
-        label-position="top"
-      >
+      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px" label-position="top">
         <!-- 左侧tabs栏区域 -->
-        <el-tabs
-          tab-position="left"
-          v-model="currentIndex"
-          :before-leave="beforeTabLeave"
-        >
+        <el-tabs tab-position="left" v-model="currentIndex" :before-leave="beforeTabLeave">
           <!-- 基本信息 -->
           <el-tab-pane label="基本信息" name="0">
             <!-- 渲染 -->
@@ -63,55 +41,29 @@
             </el-form-item>
             <!-- 商品分类 -->
             <el-form-item label="商品分类" prop="goods_cat">
-              <el-cascader
-                v-model="addForm.goods_cat"
-                :options="cateList"
-                :props="cascaderProps"
-                @change="handleChange"
-              ></el-cascader>
+              <el-cascader v-model="addForm.goods_cat" :options="cateList" :props="cascaderProps" @change="handleChange"></el-cascader>
             </el-form-item>
           </el-tab-pane>
           <!-- 商品参数 -->
           <el-tab-pane label="商品参数" name="1">
             <!-- 渲染 -->
-            <el-form-item
-              :label="item.attr_name"
-              v-for="item in goodsParams"
-              :key="item.attr_id"
-            >
+            <el-form-item :label="item.attr_name" v-for="item in goodsParams" :key="item.attr_id">
               <el-checkbox-group v-model="item.attr_vals">
-                <el-checkbox
-                  border
-                  v-for="(cb, i) in item.attr_vals"
-                  :key="i"
-                  :label="cb"
-                ></el-checkbox>
+                <el-checkbox border v-for="(cb, i) in item.attr_vals" :key="i" :label="cb"></el-checkbox>
               </el-checkbox-group>
             </el-form-item>
           </el-tab-pane>
           <!-- 商品属性 -->
           <el-tab-pane label="商品属性" name="2">
             <!-- 渲染 -->
-            <el-form-item
-              :label="item.attr_name"
-              v-for="item in goodsProps"
-              :key="item.attr_id"
-            >
+            <el-form-item :label="item.attr_name" v-for="item in goodsProps" :key="item.attr_id">
               <el-input v-model="item.attr_vals"></el-input>
             </el-form-item>
           </el-tab-pane>
           <!-- 商品图片 -->
           <el-tab-pane label="商品图片" name="3">
             <!-- 渲染 -->
-            <el-upload
-              class="upload-demo"
-              :action="uploadURL"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
-              multiple
-              :headers="headerObj"
-              :on-success="handleSuccess"
-            >
+            <el-upload class="upload-demo" :action="uploadURL" :on-preview="handlePreview" :on-remove="handleRemove" multiple :headers="headerObj" :on-success="handleSuccess">
               <el-button size="small" type="primary">点击上传</el-button>
             </el-upload>
           </el-tab-pane>
@@ -120,9 +72,7 @@
             <!-- 富文本编辑器组件 -->
             <quill-editor v-model="addForm.goods_introduce"></quill-editor>
             <!-- 添加商品按钮 -->
-            <el-button type="primary" class="addGoodsBtn" @click="addGoodsClick"
-              >添加商品</el-button
-            >
+            <el-button type="primary" class="addGoodsBtn" @click="addGoodsClick">添加商品</el-button>
           </el-tab-pane>
         </el-tabs>
       </el-form>
@@ -139,13 +89,7 @@
 import BreakCrumb from 'components/content/BreakCrumb'
 import { getTabData } from 'common/mixin'
 
-import {
-  vaildGoodsName,
-  vaildGoodsPrice,
-  vaildGoodsNumber,
-  vaildGoodsWeight,
-  vaildGoodsCat,
-} from 'common/validator'
+import { vaildGoodsName, vaildGoodsPrice, vaildGoodsNumber, vaildGoodsWeight, vaildGoodsCat } from 'common/validator'
 
 export default {
   // 使用混入
@@ -212,8 +156,7 @@ export default {
     // 监听 父级分类选择项发生变化
     handleChange() {
       // 判断如果是否为三级分类
-      if (this.addForm.goods_cat.length === 1)
-        console.log(this.addForm.goods_cat.length)
+      if (this.addForm.goods_cat.length === 1) console.log(this.addForm.goods_cat.length)
       if (this.addForm.goods_cat.length !== 3) {
         this.addForm.goods_cat = []
         this.$message.warning('只能添加三级分类,请重新选择!')
@@ -241,12 +184,9 @@ export default {
       // 获取要删除的文件路径
       const removePath = file.response.data.tmp_path
       // 找到要删除文件的索引
-      const removeIndex = this.addForm.pics.findIndex(
-        (item) => item.pic === removePath
-      )
+      const removeIndex = this.addForm.pics.findIndex((item) => item.pic === removePath)
       // 从pics数组中移除文件
       this.addForm.pics.splice(removeIndex, 1)
-      console.log(this.addForm)
     },
     // 点击预览 已经上传的图片
     handlePreview(file) {

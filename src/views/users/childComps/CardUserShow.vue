@@ -3,33 +3,18 @@
     <!-- 序号 -->
     <el-table-column align="center" type="index" label="#"></el-table-column>
     <!-- 姓名 -->
-    <el-table-column
-      align="center"
-      prop="username"
-      label="姓名"
-    ></el-table-column>
+    <el-table-column align="center" prop="username" label="姓名"></el-table-column>
     <!-- 邮箱 -->
     <el-table-column align="center" prop="email" label="邮箱"></el-table-column>
     <!-- 电话 -->
-    <el-table-column
-      align="center"
-      prop="mobile"
-      label="电话"
-    ></el-table-column>
+    <el-table-column align="center" prop="mobile" label="电话"></el-table-column>
     <!-- 角色 -->
-    <el-table-column
-      align="center"
-      prop="role_name"
-      label="角色"
-    ></el-table-column>
+    <el-table-column align="center" prop="role_name" label="角色"></el-table-column>
     <!-- 状态 -->
     <el-table-column align="center" label="状态">
       <template v-slot="scope">
         <!-- row是个element内置的属性 scope.row相当于当前行的数据对象 -->
-        <el-switch
-          v-model="scope.row.mg_state"
-          @change="userStateChanged(scope.row)"
-        ></el-switch>
+        <el-switch v-model="scope.row.mg_state" @change="userStateChanged(scope.row)"></el-switch>
       </template>
     </el-table-column>
     <!-- 操作 -->

@@ -1,16 +1,6 @@
 <template>
-  <el-dialog
-    title="添加用户"
-    :visible.sync="addDialogVisible"
-    width="50%"
-    @close="addDialogClosed"
-  >
-    <el-form
-      :model="addForm"
-      :rules="addFormRules"
-      ref="addFormRef"
-      label-width="100px"
-    >
+  <el-dialog title="添加用户" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
+    <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px">
       <el-form-item label="姓名：" prop="username">
         <el-input v-model="addForm.username"></el-input>
       </el-form-item>
@@ -32,12 +22,7 @@
 </template>
 
 <script>
-import {
-  vaildName,
-  vaildPassword,
-  vaildEmail,
-  vaildMobile,
-} from 'common/validator'
+import { vaildName, vaildPassword, vaildEmail, vaildMobile } from 'common/validator'
 
 import { addUser } from 'network/user.js'
 
@@ -70,13 +55,12 @@ export default {
         if (!valid) return
         // 发起添加用户的网络请求
         const { data } = await addUser(this.addForm)
-        if (data.meta.status !== 201)
-          return this.$message.error('添加用户失败!')
+        if (data.meta.status !== 201) return this.$message.error('添加用户失败!')
         this.$message.success('添加用户成功!')
         // 成功后隐藏对话框
         this.addDialogVisible = false
         // 重新获取用户列表数据 重新渲染视图
-        this.$bus.$emit('refreshUserList')
+        this.$emit('refreshUserList')
       })
     },
     // 监听添加用户对话框关闭事件

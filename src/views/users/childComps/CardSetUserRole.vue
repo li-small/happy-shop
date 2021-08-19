@@ -6,13 +6,7 @@
       <p>
         分配新角色：
         <el-select v-model="selectId" placeholder="请分配角色">
-          <el-option
-            v-for="item in roleList"
-            :key="item.id"
-            :label="item.roleName"
-            :value="item.id"
-          >
-          </el-option>
+          <el-option v-for="item in roleList" :key="item.id" :label="item.roleName" :value="item.id"> </el-option>
         </el-select>
       </p>
     </div>
@@ -44,8 +38,7 @@ export default {
     this.$bus.$on('setDialogVisible', async (user) => {
       // 请求角色数据
       const { data } = await getRoles()
-      if (data.meta.status !== 200)
-        return this.$message.error('获取权限数据失败!')
+      if (data.meta.status !== 200) return this.$message.error('获取权限数据失败!')
       this.roleList = data.data
       this.currentUser = user
       // 显示对话框
@@ -70,7 +63,7 @@ export default {
       // 隐藏对话框
       this.setRoledialogVisible = false
       // 刷新用户列表
-      this.$bus.$emit('refreshUserList', () => {
+      this.$emit('refreshUserList', () => {
         this._getUser()
       })
     },

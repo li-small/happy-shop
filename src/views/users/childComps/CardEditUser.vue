@@ -1,30 +1,14 @@
 <template>
-  <el-dialog
-    title="修改用户"
-    :visible.sync="editDialogVisible"
-    width="50%"
-    @close="editDialogClosed"
-  >
-    <el-form
-      :model="editForm"
-      :rules="editFormRules"
-      ref="editFormRef"
-      label-width="70px"
-    >
+  <el-dialog title="修改用户" :visible.sync="editDialogVisible" width="50%" @close="editDialogClosed">
+    <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
       <el-form-item label="用户名：" prop="username">
         <el-input v-model="editForm.username" disabled></el-input>
       </el-form-item>
       <el-form-item label="邮箱：" prop="email">
-        <el-input
-          v-model="editForm.email"
-          placeholder="用户暂未填写邮箱"
-        ></el-input>
+        <el-input v-model="editForm.email" placeholder="用户暂未填写邮箱"></el-input>
       </el-form-item>
       <el-form-item label="手机号：" prop="mobile">
-        <el-input
-          v-model="editForm.mobile"
-          placeholder="用户暂未填写手机号"
-        ></el-input>
+        <el-input v-model="editForm.mobile" placeholder="用户暂未填写手机号"></el-input>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -84,7 +68,7 @@ export default {
         // 成功后隐藏对话框
         this.editDialogVisible = false
         // 重新获取用户列表数据 重新渲染视图
-        this.$bus.$emit('refreshUserList')
+        this.$emit('refreshUserList')
       })
     },
   },
