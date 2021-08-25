@@ -1,7 +1,7 @@
 <template>
   <div>
     <img src="~assets/welcome.jpg" alt="" />
-    <h1>欢迎来到小猿电商后台管理系统</h1>
+    <h1>欢迎来到乐购后台管理系统</h1>
   </div>
 </template>
 

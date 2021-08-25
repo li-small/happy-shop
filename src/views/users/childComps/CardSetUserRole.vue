@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="分配角色" :visible.sync="setRoledialogVisible" width="50%">
+  <el-dialog title="分配角色" :visible.sync="setRoledialogVisible" width="50%" @closed="setDialogClosed">
     <div>
       <p>当前的用户：{{ currentUser.username }}</p>
       <p>当前的角色：{{ currentUser.role_name }}</p>
@@ -66,6 +66,10 @@ export default {
       this.$emit('refreshUserList', () => {
         this._getUser()
       })
+    },
+    setDialogClosed() {
+      // 离开对话框 重置数据
+      this.selectId = []
     },
   },
 }

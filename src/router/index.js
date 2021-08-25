@@ -77,6 +77,7 @@ const routes = [
 
 const router = new VueRouter({
   routes,
+  mode: 'history'
 })
 
 // 跳转前调用
